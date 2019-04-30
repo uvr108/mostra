@@ -44,6 +44,8 @@ export class EstacionesComponent implements OnInit, AfterViewInit {
      else if (num == 1) { serie = { 1 : {type: 'line'}};}
      else { console.log('Mierda !!!!!!!!!'); }
     
+     this.charts=[]; 
+
      this.charts.push({
         title: 'Estaciones',
         width: '1600',

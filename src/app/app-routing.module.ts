@@ -12,7 +12,7 @@ const routes: Routes = [
   { path:'estaciones', component: EstacionesComponent},
   { path:'eventos', component: EventosComponent},
   { path:'ratios', component: RatiosComponent},
-  { path: '', redirectTo: '/menu', pathMatch: 'full' },
+  { path: '', redirectTo: 'menu', pathMatch: 'full' },
 
 ];
 

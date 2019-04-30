@@ -34,17 +34,16 @@ export class MenuComponent implements OnInit, AfterViewInit {
   periodForm = this.fb.group({
     fecha_ini : ['', [Validators.required]],
     fecha_fin : ['',  [Validators.required]],
-    opt_n : [''],
-    opt_nc : [''],
-    opt_v : [''],
-    opt_zc : [''],
-    opt_s : [''], 
-    opt_es : [''],
+    opt_n : ['1'],
+    opt_nc : ['1'],
+    opt_v : ['1'],
+    opt_zc : ['1'],
+    opt_s : ['1'], 
+    opt_es : ['1'],
   });
  
   zona:Array<string> = [];
   columnas:Array<string> = [];
-  ratios={};
 
   
   datos_tabla: Object;
@@ -53,13 +52,26 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
     this.dttService.stream_msg.subscribe(
       msg => {
+          
         console.log('Resiviendo dato');
-        this.datos_tabla = msg;    
+        this.datos_tabla = msg;
+        this.formatear_ratios();
         this.formatear_datos();
         this.datosComponent.tabla = this.datos_tabla;
         this.estacionesComponent.mostra(this.columnas, this.usadas);
         this.eventosComponent.mostra(this.columnas, this.eventos);
-        this.ratiosComponent.mostra(this.zona, this.ratios);
+        /*
+        console.log(`this.norte : ${JSON.stringify(this.norte)}`);
+        console.log(`this.norte_chico : ${ JSON.stringify(this.norte_chico)}`);
+        console.log(`this.valparaiso : ${JSON.stringify(this.valparaiso)}`);
+        console.log(`this.central : ${JSON.stringify(this.central)}`);
+        console.log(`this.sur : ${JSON.stringify(this.sur)}`);
+        console.log(`this.extremo_sur : ${JSON.stringify(this.extremo_sur)}`);
+        */
+        this.ratiosComponent.mostra(this.norte,this.norte_chico,this.valparaiso,
+          this.central,this.sur,this.extremo_sur);
+
+
       });
     console.log('Test WS Ok');
   }
@@ -98,105 +110,144 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   usadas=[];
   eventos=[];
-  
-  ratios_norte=[];
-  ratios_nchico=[];
-  ratios_valpo=[];
-  ratios_central=[];
-  ratios_sur=[];
-  ratios_exts=[];
+  ratios={};
+
+  norte = []; 
+  norte_chico = [];
+  valparaiso = [];
+  central = [];
+  sur = [];
+  extremo_sur = [];
+
 
   average(arr) {
      
-    var sum = 0;
-    var avg = 0;
+  var sum = 0;
+  var avg = 0;
 
-    if (arr.length)
-    {
+  if (arr.length)
+  {
        sum = arr.reduce(function(a, b) { return a + b; });
        avg = sum / arr.length;
-    } 
-    return avg;
+  } 
+  return avg;
  }
 
+  formatear_ratios() {
+ 
+    let tabla = this.datos_tabla;
+    let data: Object;
+    let jl: Object;
+    let jr = [];
+
+    let Norte = [];
+    let NChico = [];
+    let Valparaiso = [];
+    let Central = [];    
+    let Sur = [];
+    let Extremo_Sur = [];
+
+
+    console.log(`zona : ${this.zona}`);
+
+    for (let t in tabla) {
+         for (let z in this.zona) {
+
+          try
+          {
+            data = tabla[t]["data"][this.zona[z]]['ratio'];
+            jl = tabla[t]["jl"];
+            jr = [jl,data['5°'],data['10°'],data['15°'],data['20°']];
+            // console.log(`tabla_tabla : ${jl} ${this.zona[z]} ${JSON.stringify(jr)}`);
+          }
+          catch (Exception)
+          {
+            jr = [jl,0,0,0,0];
+            // console.log(`tabla_tabla : ${jl} ${this.zona[z]} ${JSON.stringify(jr)}`);     
+          }
+
+          if (this.zona[z] == 'Norte') { Norte.push(jr); }
+          if (this.zona[z] == 'N.Chico') { NChico.push(jr); } 
+          if (this.zona[z] == 'Valpo') { Valparaiso.push(jr); }
+          if (this.zona[z] == 'Zona.C') { Central.push(jr); }
+          if (this.zona[z] == 'Sur') { Sur.push(jr); }
+          if (this.zona[z] == 'Extremo_Sur') { Extremo_Sur.push(jr); }
+    
+ 
+         }
+    }
+    
+    this.norte = Norte; 
+    this.norte_chico = NChico;
+    this.valparaiso = Valparaiso;
+    this.central = Central;
+    this.sur = Sur;
+    this.extremo_sur = Extremo_Sur;
+    
+  } 
 
   formatear_datos(){
 
     let data_usadas = [];
     let data_eventos = [];
-    let data_ratios = [];
     let usadas:any;
     let eventos:any;
-    let ratios=[];
     let usadas_arr=[];
     let eventos_arr=[];
     let average_usadas: Number;
     let average_eventos: Number;
     let jl: String;
-    
-    let ratios_norte=[];
-    let ratios_nchico=[];
-    let ratios_valpo=[];
-    let ratios_central=[];
-    let ratios_sur=[];
-    let ratios_exts=[];
+ 
+    for ( let d in this.datos_tabla) {
 
-    for ( let d in this.datos_tabla){
         average_usadas = 0;
         average_eventos = 0;
         jl = '';
 
         usadas=0;
         eventos=0;
-        ratios=[];
-
+        
         usadas_arr=[];
         eventos_arr=[];
 
         data_usadas=[];
         data_eventos=[];
-        data_ratios=[];
-
-        ratios_norte=[];
-        ratios_nchico=[];
-        ratios_valpo=[];
-        ratios_central=[];
-        ratios_sur=[];
-        ratios_exts=[];
 
         jl = this.datos_tabla[d]['jl'];
         
         data_usadas.push(jl);
         data_eventos.push(jl);
-        
-        let rjs = {};  // alberga los ratios
 
         for (let z in this.zona) {
-            if (Object.keys(this.datos_tabla[d]['data']).length==0) {}
-            else
-            {
-                usadas = (this.datos_tabla[d]['data']=={}) ? 0 : this.datos_tabla[d]['data'][this.zona[z]]['usadas'];
-                eventos = (this.datos_tabla[d]['data']=={}) ? 0 : this.datos_tabla[d]['data'][this.zona[z]]['eventos'];
-            
-                rjs = this.datos_tabla[d]['data'][this.zona[z]]['ratio'];
+
+                try
+                {
+                  usadas = this.datos_tabla[d]['data'][this.zona[z]]['usadas'];    
+                }
+                catch (Exception)
+                {
+                   usadas = 0;
+                }
+
+                try
+                {
+                  eventos = this.datos_tabla[d]['data'][this.zona[z]]['eventos'];
+                }
+                catch (Exception)
+                {
+                  eventos = 0;
+                }  
+               
 
                 data_usadas.push(usadas);
-
                 data_eventos.push(eventos);
-            
-                data_ratios = [jl,rjs['5°'],rjs['10°'],rjs['15°'],rjs['20°']];
-           
-                if (z=='0') { ratios_norte = data_ratios;}
-                if (z=='1') { ratios_nchico = data_ratios;}
-                if (z=='2') { ratios_valpo = data_ratios;}
-                if (z=='3') { ratios_central = data_ratios;}
-                if (z=='4') { ratios_sur = data_ratios;}
-                if (z=='5') { ratios_exts = data_ratios};
 
                 usadas_arr.push(usadas);
                 eventos_arr.push(eventos);
-            }    
-        }    
+          
+                
+        } 
+
         average_usadas = this.average(usadas_arr);
         average_eventos = this.average(eventos_arr);
 
@@ -206,27 +257,24 @@ export class MenuComponent implements OnInit, AfterViewInit {
         this.usadas.push(data_usadas);
         this.eventos.push(data_eventos);
 
-        if (ratios_norte.length>0) this.ratios_norte.push(ratios_norte);
-        if (ratios_nchico.length>0) this.ratios_nchico.push(ratios_nchico);
-        if (ratios_valpo.length>0) this.ratios_valpo.push(ratios_valpo);
-        if (ratios_central.length>0) this.ratios_central.push(ratios_central);
-        if (ratios_sur.length>0) this.ratios_sur.push(ratios_sur);
-        if (ratios_exts.length>0) this.ratios_exts.push(ratios_exts);
+
       } 
-        this.ratios = {'Norte': this.ratios_norte,'Norte Chico': this.ratios_nchico,
-        'Valparaiso': this.ratios_valpo,'Central': this.ratios_central,'Sur' : this.ratios_sur,'Extremo Sur': this.ratios_exts};
-
-   
-
-
+ 
+         console.log(`columnas : ${JSON.stringify(this.columnas)}`)
+         console.log(`zona : ${this.zona}`);
+         console.log(`usadas : ${JSON.stringify(this.usadas)}`);
+         console.log(`eventos : ${JSON.stringify(this.eventos)}`);
   };
 
   onSubmit() {
 
     var period = this.make_period();
     var jp = this.get_julian(period);
-    
+ 
     this.zona = [];
+    this.columnas=[];
+    this.usadas=[];
+    this.eventos=[];
 
     this.columnas.push('juliano');
 
@@ -244,8 +292,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
     const mensaje: Message = {'command': 'listar','tipo': 'rethink', 
       'message': [{'command': 'listar', 'message': {'table': 'ratio', 'between': between, 'order': 'yrjl', 'option': 'select', 'pluck' : pluck }}]};
-
-    console.log(mensaje);  
 
     this.dttService.send(mensaje);
     

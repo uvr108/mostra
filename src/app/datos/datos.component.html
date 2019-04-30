@@ -9,7 +9,7 @@
 </div>
 <div *ngIf="tabla" class="row">
   <div class="col-12">
-  <table class="table table-sm">
+  <table class="table table-sm" style="width: 100%">
     <thead>
      <tr *ngFor="let datos of tabla  |paginate: { itemsPerPage: 10, currentPage: p } ">
      

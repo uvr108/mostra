@@ -8,7 +8,7 @@
   <div class="col-12" style="text-align: center"><h3>Métricas - CSN</h3></div>
 </div>
 <hr>
-<div class="row"> 
+<div class="row" style="text-align: center"> 
   
   <div class="col-12"> 
       <form [formGroup]="periodForm" (ngSubmit)="onSubmit()" validate> 
@@ -39,58 +39,32 @@
       <label><button type="button" class="btn btn-primary btn-sm" [disabled]="!periodForm.valid">Bajar datos</button></label>
 
     </form>
-    </div>
-<div>
-  
-<div class="row">
-  <div class="col-12">    
- 
-  <div class="container" style="text-align: center;" >
-  
-    
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#datos">Datos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#estaciones">Estaciones</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#eventos">Eventos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#ratios">Ratios</a>
-        </li>
-  
-      </ul>
-    
-      
-      <!-- Tab panes -->
-      <div class="tab-content" style="text-align: center;">
-        <div id="home" class="container tab-pane active" ><br>
-          <h3>HOME</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div>
-        <div id="datos" class="container tab-pane fade"><br>
-          <app-datos></app-datos>
-        </div>
-        <div id="estaciones" class="container tab-pane fade"><br>
-          <app-estaciones></app-estaciones>
-        </div>
-        <div id="eventos" class="container tab-pane fade"><br>
-          <app-eventos></app-eventos>
-        </div>
-        <div id="ratios" class="container tab-pane fade"><br>
-          <app-ratios></app-ratios>
-        </div>
-
-      </div>
-    </div>  
   </div>
+</div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs nav-justified">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#datos">Datos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#estaciones">Estaciones</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#eventos">Eventos</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#ratios">Ratios</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content  nav-justified">
+  <div class="tab-pane container active" id="datos"><app-datos></app-datos></div>
+  <div class="tab-pane container" id="estaciones"><app-estaciones></app-estaciones></div>
+  <div class="tab-pane container" id="eventos"><app-eventos></app-eventos></div>
+  <div class="tab-pane container" id="ratios"><app-ratios></app-ratios></div>
 </div>
 
 

@@ -24,16 +24,17 @@ export class RatiosComponent implements OnInit ,  AfterViewInit {
 
   @ViewChild('chart') chart: GoogleChartComponent;
 
-  norte = [ [ "121", 0.3, 0.18, 0.13, 0.1 ], [ "122", 0.31, 0.2, 0.13, 0.11 ], [ "123", 0.38, 0.22, 0.14, 0.12 ] ];
+  mostra(norte:any,nchico:any,valpo:any,central:any,sur:any, extremo_sur:any) {
+          
+          let ratios = {'Norte': norte,'N_Chico': nchico,'Valparaiso': valpo,'Central':central,'Sur': sur, 'Extremo_Sur': extremo_sur };  
+          
+          this.charts=[];
 
-  mostra(zona:Array<string>, ratios: any) {
-
-    for (let r in ratios) {
-
-      if (ratios[r].length == 0) {}
-      else {
-          console.log(`ratios : ${r} ${typeof(ratios[r])}  ${JSON.stringify(ratios[r])}`);
-
+          for ( let r in ratios) { 
+           if (ratios[r].length > 0 ) {
+             
+           console.log(`r : ${r} | ${ratios[r].length} | ${JSON.stringify(ratios[r])}`);
+         
           this.charts.push({
             title: r,
             type: 'LineChart',
@@ -48,8 +49,10 @@ export class RatiosComponent implements OnInit ,  AfterViewInit {
             }
       
           });
-      }
-    }
+         
+         
+        }
+        }
   }
 
   onReady() {

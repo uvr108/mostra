@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,AfterViewInit   } from '@angular/core';
+import { Component, OnInit, ViewChild,AfterViewInit  } from '@angular/core';
 import { ChartErrorEvent, ChartEvent, GoogleChartComponent } from '../public_api/public_api';
 
 @Component({
@@ -6,8 +6,7 @@ import { ChartErrorEvent, ChartEvent, GoogleChartComponent } from '../public_api
   templateUrl: './eventos.component.html',
   styles: [':host > *:not(h1) { display: inline-block !important; }']
 })
-export class EventosComponent implements OnInit , AfterViewInit {
-
+export class EventosComponent implements OnInit, AfterViewInit {
 
   charts: Array<{
     title: string,
@@ -22,65 +21,67 @@ export class EventosComponent implements OnInit , AfterViewInit {
 
   title: string = 'Eventos';
   
+
   @ViewChild('chart') chart: GoogleChartComponent;
 
-  mostra(zona:Array<string>, datos: Array<[]>) {
-    let num = zona.length - 2;
-    let serie = {};
+  constructor() {
+  }
 
-    if (num == 7) { serie = { 7 : {type: 'line'}};}
-    else if (num == 6) { serie = { 6 : {type: 'line'}};}
-    else if (num == 5) { serie = { 5 : {type: 'line'}};}
-    else if (num == 4) { serie = { 4 : {type: 'line'}};}
-    else if (num == 3) { serie = { 3 : {type: 'line'}};}
-    else if (num == 2) { serie = { 2 : {type: 'line'}};}
-    else if (num == 1) { serie = { 1 : {type: 'line'}};}
-    else { console.log('Mierda !!!!!!!!!'); }
-   
-    this.charts.push({
-       title: 'Eventos',
-       width: '1600',
-       height: '600',
-       type: 'ComboChart',
-       columnNames: zona,
-       data:   datos 
-       ,
-       roles: [],
-       options: {
-           vAxis: {title: 'Eventos'},
-           hAxis: {title: 'Juliano'},
-           seriesType: 'bars',
-           series: serie 
-       }
-   });
- }
-
- onReady() {
-   console.log('Chart ready');
-   // console.log(this.get_zones());
- }
-
- onError(error: ChartErrorEvent) {
-   console.error('Error: ' + error.message.toString());
- }
-
- onSelect(event: ChartEvent) {
-   console.log('Selected: ' + event.toString());
- }
-
- onMouseEnter(event: ChartEvent) {
-   console.log('Hovering ' + event.toString());
- }
-
- onMouseLeave(event: ChartEvent) {
-   console.log('No longer hovering ' + event.toString());
- }
-
-  constructor() { }
+  ngOnInit() {}
 
   ngAfterViewInit() {};
 
-  ngOnInit() {
+  mostra(zona:Array<string>, datos: Array<[]>) {
+     let num = zona.length - 2;
+     let serie = {};
+
+     if (num == 7) { serie = { 7 : {type: 'line'}};}
+     else if (num == 6) { serie = { 6 : {type: 'line'}};}
+     else if (num == 5) { serie = { 5 : {type: 'line'}};}
+     else if (num == 4) { serie = { 4 : {type: 'line'}};}
+     else if (num == 3) { serie = { 3 : {type: 'line'}};}
+     else if (num == 2) { serie = { 2 : {type: 'line'}};}
+     else if (num == 1) { serie = { 1 : {type: 'line'}};}
+     else { console.log('Mierda !!!!!!!!!'); }
+    
+     this.charts=[]; 
+
+     this.charts.push({
+        title: 'Eventos',
+        width: '1600',
+        height: '600',
+        type: 'ComboChart',
+        columnNames: zona,
+        data:   datos 
+        ,
+        roles: [],
+        options: {
+            vAxis: {title: 'Eventos'},
+            hAxis: {title: 'Juliano'},
+            seriesType: 'bars',
+            series: serie 
+        }
+    });
   }
 
+  onReady() {
+    console.log('Chart ready');
+    // console.log(this.get_zones());
+  }
+
+  onError(error: ChartErrorEvent) {
+    console.error('Error: ' + error.message.toString());
+  }
+
+  onSelect(event: ChartEvent) {
+    console.log('Selected: ' + event.toString());
+  }
+
+  onMouseEnter(event: ChartEvent) {
+    console.log('Hovering ' + event.toString());
+  }
+
+  onMouseLeave(event: ChartEvent) {
+    console.log('No longer hovering ' + event.toString());
+  }
 }

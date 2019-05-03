@@ -33,7 +33,7 @@ export class RatiosComponent implements OnInit ,  AfterViewInit {
           for ( let r in ratios) { 
            if (ratios[r].length > 0 ) {
              
-           console.log(`r : ${r} | ${ratios[r].length} | ${JSON.stringify(ratios[r])}`);
+           //console.log(`r : ${r} | ${ratios[r].length} | ${JSON.stringify(ratios[r])}`);
          
           this.charts.push({
             title: r,

@@ -57,7 +57,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
         this.datos_tabla = msg;
         this.formatear_ratios();
         this.formatear_datos();
-        this.datosComponent.tabla = this.datos_tabla;
+        this.datosComponent.ratios = this.datos_tabla;
+        this.datosComponent.carga_datos(this.periodForm.value, this.zona);
         this.estacionesComponent.mostra(this.columnas, this.usadas);
         this.eventosComponent.mostra(this.columnas, this.eventos);
         /*
@@ -118,7 +119,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
   central = [];
   sur = [];
   extremo_sur = [];
-
 
   average(arr) {
      
@@ -259,12 +259,15 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
 
       } 
- 
+        /*
          console.log(`columnas : ${JSON.stringify(this.columnas)}`)
          console.log(`zona : ${this.zona}`);
          console.log(`usadas : ${JSON.stringify(this.usadas)}`);
          console.log(`eventos : ${JSON.stringify(this.eventos)}`);
+         */
   };
+
+ 
 
   onSubmit() {
 

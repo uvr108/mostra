@@ -27,6 +27,7 @@ import { RatiosComponent } from './ratios/ratios.component';
     EstacionesComponent,
     EventosComponent,
     RatiosComponent
+    
   ],
   imports: [
     RouterModule,

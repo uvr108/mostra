@@ -54,6 +54,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
       msg => {
           
         console.log('Resiviendo dato');
+        console.log(`msg : ${JSON.stringify(msg)}`)
         this.datos_tabla = msg;
         this.formatear_ratios();
         this.formatear_datos();
@@ -106,7 +107,16 @@ export class MenuComponent implements OnInit, AfterViewInit {
     var p1 = period[0].split('-');
     var p2 = period[1].split('-');
 
-    return [[p1[0], this.julian(p1[0],p1[1],p1[2])],[p2[0], this.julian(p2[0],p2[1],p2[2])]]
+    var j1 = this.julian(p1[0],p1[1],p1[2]);
+    var j2 = this.julian(p2[0],p2[1],p2[2]);
+
+    console.log(`p1,p2 : ${p1} ${p2}`);
+    console.log(`j1,j2 : ${j1} ${j2}`);
+
+    j1='001'; 
+    j2='015';
+
+    return [[p1[0], j1],[p2[0], j2]]
   }
 
   usadas=[];
@@ -259,12 +269,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
 
       } 
-        /*
+        
          console.log(`columnas : ${JSON.stringify(this.columnas)}`)
          console.log(`zona : ${this.zona}`);
          console.log(`usadas : ${JSON.stringify(this.usadas)}`);
          console.log(`eventos : ${JSON.stringify(this.eventos)}`);
-         */
+         
   };
 
  
@@ -274,6 +284,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
     var period = this.make_period();
     var jp = this.get_julian(period);
  
+    console.log(`period : ${JSON.stringify(period)}`); 
+
     this.zona = [];
     this.columnas=[];
     this.usadas=[];
@@ -292,6 +304,9 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
     const pluck = ['yr', 'jl', {'data': this.zona}];
     const between = [jp[0], jp[1],'yrjl']
+
+    console.log(`between : ${JSON.stringify(between)}`);
+
 
     const mensaje: Message = {'command': 'listar','tipo': 'rethink', 
       'message': [{'command': 'listar', 'message': {'table': 'ratio', 'between': between, 'order': 'yrjl', 'option': 'select', 'pluck' : pluck }}]};

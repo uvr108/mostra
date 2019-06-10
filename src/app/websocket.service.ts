@@ -37,7 +37,7 @@ export class WebsocketService {
           next: (data: Object) => {
               if (ws.readyState === WebSocket.OPEN) {
                   ws.send(JSON.stringify(data));
-                  console.log('data : ', JSON.stringify(data));
+                  // console.log('data : ', JSON.stringify(data));
               }
           }
       };

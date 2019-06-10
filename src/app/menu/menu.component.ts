@@ -54,7 +54,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
       msg => {
           
         console.log('Resiviendo dato');
-        console.log(`msg : ${JSON.stringify(msg)}`)
+        // console.log(`msg : ${JSON.stringify(msg)}`)
         this.datos_tabla = msg;
         this.formatear_ratios();
         this.formatear_datos();
@@ -158,7 +158,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
     let Extremo_Sur = [];
 
 
-    console.log(`zona : ${this.zona}`);
+    // console.log(`zona : ${this.zona}`);
 
     for (let t in tabla) {
          for (let z in this.zona) {
@@ -270,10 +270,10 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
       } 
         
-         console.log(`columnas : ${JSON.stringify(this.columnas)}`)
-         console.log(`zona : ${this.zona}`);
-         console.log(`usadas : ${JSON.stringify(this.usadas)}`);
-         console.log(`eventos : ${JSON.stringify(this.eventos)}`);
+         // console.log(`columnas : ${JSON.stringify(this.columnas)}`)
+         // console.log(`zona : ${this.zona}`);
+         // console.log(`usadas : ${JSON.stringify(this.usadas)}`);
+         // console.log(`eventos : ${JSON.stringify(this.eventos)}`);
          
   };
 
@@ -282,7 +282,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   onSubmit() {
 
     var period = this.make_period();
-    var jp = this.get_julian(period);
+    // var jp = this.get_julian(period);
  
     console.log(`period : ${JSON.stringify(period)}`); 
 
@@ -300,16 +300,19 @@ export class MenuComponent implements OnInit, AfterViewInit {
     if ( this.periodForm.value['opt_s'] == true) { this.zona.push('Sur'); this.columnas.push('Sur'); };
     if ( this.periodForm.value['opt_es'] == true) { this.zona.push('Ext.S'); this.columnas.push('Ext.S'); };
 
+    console.log(`zona : ${JSON.stringify(this.zona)}`); 
+
     this.columnas.push('promedio');
 
     const pluck = ['yr', 'jl', {'data': this.zona}];
-    const between = [jp[0], jp[1],'yrjl']
+    // const get_julian = [[period[0], period[1]],'yrjl'];
+    const get_julian = [[period[0],period[1]],'yrjl'];
+    const order = {'yr':'asc','jl':'asc'};
+  
 
-    console.log(`between : ${JSON.stringify(between)}`);
-
-
-    const mensaje: Message = {'command': 'listar','tipo': 'rethink', 
-      'message': [{'command': 'listar', 'message': {'table': 'ratio', 'between': between, 'order': 'yrjl', 'option': 'select', 'pluck' : pluck }}]};
+    const mensaje: Message = {'command': 'listar', 'tipo': 'rethink','message': 
+    {'table': 'ratio',  'option': 'select', 'get_julian': get_julian,'pluck' : pluck, 'order': order }};
+    console.log(`Message : ${JSON.stringify(mensaje)}`);
 
     this.dttService.send(mensaje);
     

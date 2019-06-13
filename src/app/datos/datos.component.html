@@ -1,7 +1,10 @@
 <div *ngIf="tabla" class="row">
   <div class="col-12">
-   <h3>Informes</h3>
-  
+    <form [formGroup]="camposForm"> 
+   <div *ngFor="let c of campos" class="form-check-inline">
+    <input type="checkbox" class="form-check-input" formControlName="{{c}}">{{ c }}
+    </div>
+    </form>
     <div style="text-align: left;">
       <table class="table table-sm">
         <thead>

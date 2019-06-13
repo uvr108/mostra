@@ -3,6 +3,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { WebsocketService } from '../websocket.service';
 import { ConectaService } from '../conecta.service';
 import { Message } from '../message';
+import { FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-datos',
@@ -20,15 +22,39 @@ export class DatosComponent implements OnInit {
   // cabecera3: Array<string> = ['sfile','latitud','longitud','dep','m1_magnitud',
   // 'm1_tipo','m5','m20','no','pup','retardo','sensible','tipo_estadistica','version'];
   // cabecera2 : Array<String> = ['yr','jl','data'];
+  campos  : Array<String> = ['zona','fecha_origen','sfile','latitud','longitud', 'no','cont_5',
+  'cont_10','cont_15','cont_20','sensible','email_origen','retardo','operario','pup','m5','m20','version','tipo_estadistica'];
   cabecera : Array<String> = ['zona','fecha_origen','sfile','latitud','longitud', 'no','cont_5','cont_10','cont_15','cont_20'];
 
 
+  camposForm = this.fb.group({
+    zona :[true],
+    fecha_origen :[true],
+    sfile : [true],
+    latitud :[true],
+    longitud :[true], 
+    no : [true],
+    cont_5 :[true],
+    cont_10 : [true],
+    cont_15 : [true],
+    cont_20 : [true],
+    sensible : [false],
+    email_origen : [false],
+    retardo : [false],
+    operario : [false],
+    pup : [false],
+    m5 : [false],
+    m20 : [false],
+    version : [false],
+    tipo_estadistica : [false],
+  });
+ 
   
-  constructor(private dttService: ConectaService ) { 
+  constructor(private fb: FormBuilder, private dttService: ConectaService ) { 
 
     this.dttService.stream_msg.subscribe(
       msg => {
-          
+        console.log(`campos : ${JSON.stringify(this.camposForm.value)}`)  
         console.log('Resiviendo dato');
         // console.log(msg);
         this.tabla = msg;

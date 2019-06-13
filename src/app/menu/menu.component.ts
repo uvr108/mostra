@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Message } from '../message';
-import { sprintf } from 'sprintf-js';
 import { ConectaService } from '../conecta.service';
 import { WebsocketService } from '../websocket.service';
 import { DatosComponent } from '../datos/datos.component';
@@ -90,7 +89,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
     return [this.fecha_ini , this.fecha_fin]
   }
-
+/*
   julian(ano:string,mes:string,dia:string) {
 
     var now:any = new Date(+ano,+mes,+dia,0,0,0);
@@ -118,7 +117,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
     return [[p1[0], j1],[p2[0], j2]]
   }
-
+*/
   usadas=[];
   eventos=[];
   ratios={};

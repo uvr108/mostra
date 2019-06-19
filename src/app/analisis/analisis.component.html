@@ -1,0 +1,30 @@
+<div *ngIf="tabla" class="row">
+  <div class="col-12">
+    <h4>Eventos</h4>
+          <!--table class="table table-sm" width="100%"-->
+      <table class="table" width="100%">
+        <thead>
+          <tr><th  *ngFor="let c of cabecera">{{ c }}</th></tr>
+          <tr *ngFor="let datos of tabla  |paginate: { itemsPerPage: 10, currentPage: p } ">     
+          <td class="text-sm-justify" *ngFor="let c of cabecera" >
+          <div *ngIf=" c === 'data'; else losDemas" >
+                   {{ datos['data'] | json }}
+          </div>
+          <ng-template #losDemas>
+               {{ datos[c]}} 
+          </ng-template>
+          </td>
+          </tr>
+        </thead>
+    </table>
+  </div>
+</div>
+<hr>
+<div *ngIf="tabla" class="row">
+  <div class="col-12">
+      <pagination-controls (pageChange)="p=$event"></pagination-controls>
+  </div>
+  <div class="col-4" *ngIf="tipo=='file'">
+      <p>Archivo a Bajar {{tipo}} : <a href="ftp://{{ftp_server}}/pub/{{datos_ftp[0]}}/{{datos_ftp[1]}}" download>{{datos_ftp[1]}}</a></p>
+  </div>
+</div>

@@ -18,6 +18,7 @@ import { DatosComponent } from './datos/datos.component';
 import { EstacionesComponent } from './estaciones/estaciones.component';
 import { EventosComponent } from './eventos/eventos.component';
 import { RatiosComponent } from './ratios/ratios.component';
+import { AnalisisComponent } from './analisis/analisis.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RatiosComponent } from './ratios/ratios.component';
     DatosComponent,
     EstacionesComponent,
     EventosComponent,
-    RatiosComponent
+    RatiosComponent,
+    AnalisisComponent
     
   ],
   imports: [

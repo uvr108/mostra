@@ -7,6 +7,7 @@ import { DatosComponent } from '../datos/datos.component';
 import { EstacionesComponent } from '../estaciones/estaciones.component';
 import { EventosComponent } from '../eventos/eventos.component';
 import { RatiosComponent } from '../ratios/ratios.component';
+import { AnalisisComponent } from '../analisis/analisis.component';
 
 @Component({
   selector: 'app-menu',
@@ -22,15 +23,19 @@ export class MenuComponent implements OnInit, AfterViewInit {
   @ViewChild(EstacionesComponent) private estacionesComponent: EstacionesComponent;
   @ViewChild(EventosComponent) eventosComponent: EventosComponent;
   @ViewChild(RatiosComponent) ratiosComponent: RatiosComponent;
+  @ViewChild(AnalisisComponent) analisisComponent: AnalisisComponent;
 
   fecha_ini : string;
   fecha_fin : string;
+
 
   controlname: Array<Array<string>> = [['opt_n','Norte'],['opt_nc','Norte Chico'],['opt_v','Valparaiso'],
   ['opt_zc','Central'],['opt_s','Sur'],['opt_es','Extremo Sur']];
 
 
+
   periodForm = this.fb.group({
+
     fecha_ini : ['', [Validators.required]],
     fecha_fin : ['',  [Validators.required]],
     opt_n : ['1'],
@@ -59,6 +64,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
         this.formatear_datos();
         this.datosComponent.ratios = this.datos_tabla;
         this.datosComponent.carga_datos(this.periodForm.value, this.zona);
+        this.analisisComponent.carga_datos(this.periodForm.value);
         this.estacionesComponent.mostra(this.columnas, this.usadas);
         this.eventosComponent.mostra(this.columnas, this.eventos);
         /*

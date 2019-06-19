@@ -31,7 +31,7 @@
            <div *ngFor="let cont of controlname" class="form-check-inline">
            <input type="checkbox" class="form-check-input"  formControlName="{{cont[0]}}">{{ cont[1] }}
            </div>
-      </label>&nbsp;  
+  </label>&nbsp;  
          
       <label>
       <button type="submit"  class="btn btn-primary btn-sm" [disabled]="!periodForm.valid">Consultar</button>
@@ -43,11 +43,15 @@
 </div>
 
 <!-- Nav tabs -->
-<ul class="nav nav-tabs nav-justified">
+<div class="container">
+  <ul class="nav nav-tabs" role="tablist">
 
   <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#datos">Informes</a>
+    <a class="nav-link active" data-toggle="tab" href="#datos">Resumen</a>
   </li>
+  <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#analisis">Análisis</a>
+    </li>
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#estaciones">Estaciones</a>
   </li>
@@ -61,11 +65,14 @@
 </ul>
 
 <!-- Tab panes -->
-<div class="tab-content  nav-justified">
-  <div class="tab-pane container active" id="datos"><app-datos></app-datos></div>
-  <div class="tab-pane container" id="estaciones"><app-estaciones></app-estaciones></div>
-  <div class="tab-pane container" id="eventos"><app-eventos></app-eventos></div>
-  <div class="tab-pane container" id="ratios"><app-ratios></app-ratios></div>
+<div class="tab-content">
+  <div class="tab-pane active" id="datos"><app-datos></app-datos></div>
+  <div class="tab-pane" id="analisis"><app-analisis></app-analisis></div>
+  <div class="tab-pane" id="estaciones"><app-estaciones></app-estaciones></div>
+  <div class="tab-pane" id="eventos"><app-eventos></app-eventos></div>
+  <div class="tab-pane" id="ratios"><app-ratios></app-ratios></div>
+</div>
+
 </div>
 
 

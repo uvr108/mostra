@@ -1,16 +1,6 @@
-<div class="row">
-  <div class="col-12"> 
-      &nbsp;<img src="http://www.sismologia.cl/img/ssuch.png" style="background-color:black;" width="100%" height="120px">&nbsp;
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-12" style="text-align: center"><h3>Métricas - CSN</h3></div>
-</div>
-<hr>
 <div class="row" style="text-align: center"> 
   
-  <div class="col-12"> 
+  <div class="col-12" style="text-align: left"> 
       <form [formGroup]="periodForm" (ngSubmit)="onSubmit()" validate> 
       
       <label>
@@ -35,44 +25,39 @@
          
       <label>
       <button type="submit"  class="btn btn-primary btn-sm" [disabled]="!periodForm.valid">Consultar</button>
-      </label>&nbsp;
-      <label><button type="button" class="btn btn-primary btn-sm" [disabled]="!periodForm.valid">Bajar datos</button></label>
+      </label>
 
     </form>
   </div>
+  
 </div>
 
 <!-- Nav tabs -->
-<div class="container">
-  <ul class="nav nav-tabs" role="tablist">
 
-  <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#datos">Resumen</a>
-  </li>
-  <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#analisis">Análisis</a>
-    </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#estaciones">Estaciones</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#eventos">Eventos</a>
-  </li>
 
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#ratios">Ratios</a>
-  </li>
-</ul>
+
+    <ul class="nav nav-tabs " role="tablist">
+
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#estaciones">Estaciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#eventos">Eventos</a>
+        </li>
+      
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#ratios">Ratios</a>
+        </li>
+
+    </ul>
+      
+      
 
 <!-- Tab panes -->
-<div class="tab-content">
-  <div class="tab-pane active" id="datos"><app-datos></app-datos></div>
-  <div class="tab-pane" id="analisis"><app-analisis></app-analisis></div>
+<div class="tab-content  justify-content-left">
   <div class="tab-pane" id="estaciones"><app-estaciones></app-estaciones></div>
   <div class="tab-pane" id="eventos"><app-eventos></app-eventos></div>
   <div class="tab-pane" id="ratios"><app-ratios></app-ratios></div>
-</div>
-
 </div>
 
 

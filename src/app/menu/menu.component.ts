@@ -58,27 +58,20 @@ export class MenuComponent implements OnInit, AfterViewInit {
       msg => {
           
         console.log('Resiviendo dato');
-        // console.log(`msg : ${JSON.stringify(msg)}`)
+        // console.log(`msg : ${JSON.stringify(msg)}`);
+        
         this.datos_tabla = msg;
         this.formatear_ratios();
         this.formatear_datos();
-        this.datosComponent.ratios = this.datos_tabla;
-        this.datosComponent.carga_datos(this.periodForm.value, this.zona);
-        this.analisisComponent.carga_datos(this.periodForm.value);
+        
+        
         this.estacionesComponent.mostra(this.columnas, this.usadas);
         this.eventosComponent.mostra(this.columnas, this.eventos);
-        /*
-        console.log(`this.norte : ${JSON.stringify(this.norte)}`);
-        console.log(`this.norte_chico : ${ JSON.stringify(this.norte_chico)}`);
-        console.log(`this.valparaiso : ${JSON.stringify(this.valparaiso)}`);
-        console.log(`this.central : ${JSON.stringify(this.central)}`);
-        console.log(`this.sur : ${JSON.stringify(this.sur)}`);
-        console.log(`this.extremo_sur : ${JSON.stringify(this.extremo_sur)}`);
-        */
+        
+   
         this.ratiosComponent.mostra(this.norte,this.norte_chico,this.valparaiso,
-          this.central,this.sur,this.extremo_sur);
-
-
+        this.central,this.sur,this.extremo_sur);
+        
       });
     console.log('Test WS Ok');
   }

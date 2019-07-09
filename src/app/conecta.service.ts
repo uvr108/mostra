@@ -27,7 +27,8 @@ export class ConectaService {
 
   send(msg: Message) {
     console.log('send ok');
-    console.log(msg);
+    // console.log(JSON.stringify(msg));
+    
     this.stream_msg.next(msg);
 
 

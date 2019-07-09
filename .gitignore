@@ -46,4 +46,6 @@ package.json
 package-lock.json
 .gitignore
 
+*.component.spec.ts
+
 package-lock.json

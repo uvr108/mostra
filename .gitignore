@@ -44,8 +44,7 @@ testem.log
 Thumbs.db
 package.json
 package-lock.json
-.gitignore
-
-*.component.spec.ts
+/*.gitignore
+/*.component.spec.ts
 
 package-lock.json

@@ -1,8 +1,42 @@
 
-<div *ngIf="tabla" class="row">
+<div class="row" style="text-align: center"> 
+  
+  <div class="col-12"   style="text-align: left"> 
+    <form [formGroup]="periodForm" (ngSubmit)="onSubmit()" validate> 
+      
+      <label>
+      <p class="text-primary">&nbsp;&nbsp;fecha inicial: 
+      <input type="date" formControlName="fecha_ini" required>&nbsp;
+      </p>
+      </label>
+
+      <label>
+      <p class="text-primary">&nbsp;fecha final:
+      <input type="date" formControlName="fecha_fin" required>&nbsp;
+      </p>
+      </label>
+      <label>
+      <p class="text-primary">&nbsp;Zonas&nbsp;: &nbsp;</p>
+      </label>
+      <label>
+           <div *ngFor="let cont of controlname" class="form-check-inline">
+           <input type="checkbox" class="form-check-input"  formControlName="{{cont[0]}}">{{ cont[1] }}
+           </div>
+      </label>&nbsp;  
+         
+      <label>
+      <button type="submit"  class="btn btn-primary btn-sm" [disabled]="!periodForm.valid">Consultar</button>
+      </label>&nbsp;
+      <label><button type="button" class="btn btn-primary btn-sm" (click)="pull()" [disabled]="!periodForm.valid">Bajar datos</button></label>
+    </form>
+  </div>
+</div>
+
+<div class="row" *ngIf="tipo=='tabla'">
   <div class="col-12">
-    <h4>Resumen</h4>
+    <h3>Informes</h3> 
     <div style="text-align: left;">
+      
       <table class="table table-sm">
         <thead>
           <tr><th  *ngFor="let c of cabecera">{{ c }}</th></tr>
@@ -19,13 +53,17 @@
         </thead>
     </table>
   </div>
+ </div>
 </div>
-<hr>
-<div *ngIf="tabla" class="row">
+
+<div *ngIf="tipo=='tabla'" class="row">
   <div class="col-12">
       <pagination-controls (pageChange)="p=$event"></pagination-controls>
   </div>
-  <div class="col-4" *ngIf="tipo=='file'">
-      <p>Archivo a Bajar {{tipo}} : <a href="ftp://{{ftp_server}}/pub/{{datos_ftp[0]}}/{{datos_ftp[1]}}" download>{{datos_ftp[1]}}</a></p>
+</div>  
+
+<div *ngIf="tipo=='file'" class="row">
+<div class="col-12">
+      <p>Archivo a Bajar {{tipo}} : <a href="ftp://10.54.218.167/pub/{{filedir}}" download>{{filedir}}</a></p>
   </div>
 </div>

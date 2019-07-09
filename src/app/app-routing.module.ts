@@ -9,7 +9,7 @@ import { AnalisisComponent} from './analisis/analisis.component';
 
 const routes: Routes = [
   
-  { path: '', redirectTo: '/menu', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
   { path:'menu', component: MenuComponent},
   { path:'datos', component: DatosComponent},
   { path:'analisis', component: AnalisisComponent},

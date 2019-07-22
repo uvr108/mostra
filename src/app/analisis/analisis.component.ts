@@ -34,12 +34,14 @@ export class AnalisisComponent implements OnInit {
 
     fecha_ini : ['', [Validators.required]],
     fecha_fin : ['',  [Validators.required]],
-    opt_n : ['1'],
+    /*opt_n : ['1'],
     opt_nc : ['1'],
     opt_v : ['1'],
     opt_zc : ['1'],
     opt_s : ['1'], 
-    opt_es : ['1'],
+    opt_es : ['1'],*/
+    pup : [false],
+    sensible: [false]
   });
 
   fecha_ini : string;
@@ -89,7 +91,7 @@ export class AnalisisComponent implements OnInit {
     var period = this.make_period();
   
     console.log(`period : ${period}`);
-  
+    console.log(`periodForm : ${JSON.stringify(this.periodForm.value)}`);
     
     var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
 
@@ -97,8 +99,25 @@ export class AnalisisComponent implements OnInit {
     var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
     var order = {'fecha_origen':'desc','version':'desc'};
     
-    const mensaje: Message = {'command': 'listar', 'tipo': 'rethink',
-    'message': {'table': 'analisis', 'option': 'select','betweenISO':between, 'order': order}};
+    var where={};
+    var or={};
+
+    if (this.periodForm.value.pup) { 
+        or['up'] = [0,null];
+    }
+
+    if (this.periodForm.value.sensible) {
+      where['sensible'] = true;
+    }
+    /*
+    r.db('csn').table('migra').orderBy(r.desc('oid'),r.desc('version')).
+    filter(r.row('sfile').eq('02-1517-56L.S201907').and((r.row('up').eq(0)).or(r.row('tipo_estadistica').eq('preliminar'))))
+    */ 
+    console.log(`where : ${JSON.stringify(where)}`);
+
+    const mensaje: Message = {'command': 'listar', 'tipo': 'rethink', 
+    'message': {'table': 'analisis', 'option': 'select','betweenISO':between,
+    'where' : where, 'order': order, 'or':or}};
 
     console.log(`Message : ${JSON.stringify(mensaje)}`);
 

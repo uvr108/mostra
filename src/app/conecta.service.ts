@@ -2,7 +2,7 @@ import { Injectable, ErrorHandler } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
 import { WebsocketService } from './websocket.service';
 import { map } from 'rxjs/operators';
-const URL = 'ws://10.54.218.167:8765/';
+const URL = 'ws://10.54.217.84:8765/';
 import { Message } from './message';
 
 @Injectable()

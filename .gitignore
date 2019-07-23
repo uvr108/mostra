@@ -48,3 +48,5 @@ package-lock.json
 /*.component.spec.ts
 
 package-lock.json
+
+src/app/analisis/analisis.component.spec.ts

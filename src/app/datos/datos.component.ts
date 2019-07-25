@@ -4,7 +4,7 @@ import { WebsocketService } from '../websocket.service';
 import { ConectaService } from '../conecta.service';
 import { Message } from '../message';
 import { Validators, FormBuilder } from '@angular/forms';
-
+import { environment } from './../../environments/environment';
 
 
 @Component({
@@ -20,6 +20,8 @@ export class DatosComponent implements OnInit, AfterViewInit  {
   ratios: Object;
   zona : Array<string>;
   p : any;
+
+  my_server_ip = environment.my_server_ip; 
 
   controlname: Array<Array<string>> = [['opt_n','Norte'],['opt_nc','Norte Chico'],['opt_v','Valparaiso'],
   ['opt_zc','Central'],['opt_s','Sur'],['opt_es','Extremo Sur']];

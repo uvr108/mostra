@@ -37,7 +37,7 @@
     <h3>Informes</h3> 
     <div style="text-align: left;">
       
-      <table class="table table-sm">
+      <table class="table table-bordered table-sm">
         <thead>
           <tr><th  *ngFor="let c of cabecera">{{ c }}</th></tr>
           <tr *ngFor="let datos of tabla  |paginate: { itemsPerPage: 20, currentPage: p } ">     
@@ -64,6 +64,6 @@
 
 <div *ngIf="tipo=='file'" class="row">
 <div class="col-12">
-      <p>Archivo a Bajar {{tipo}} : <a href="ftp://10.54.217.84/pub/{{filedir}}" download>{{filedir}}</a></p>
+      <p>Archivo a Bajar {{tipo}} : <a href="ftp://{{my_server_ip}}/pub/{{filedir}}" download>{{filedir}}</a></p>
   </div>
 </div>

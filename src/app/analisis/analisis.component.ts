@@ -4,6 +4,7 @@ import { WebsocketService } from '../websocket.service';
 import { ConectaService } from '../conecta.service';
 import { Message } from '../message';
 import { Validators, FormBuilder } from '@angular/forms';
+import { isNull } from 'util';
 
 @Component({
   selector: 'app-analisis',
@@ -41,7 +42,7 @@ export class AnalisisComponent implements OnInit {
     opt_s : ['1'], 
     opt_es : ['1'],*/
     pup : [false],
-    sensible: [false]
+    sensible: ['_ambos']
   });
 
   fecha_ini : string;
@@ -50,7 +51,7 @@ export class AnalisisComponent implements OnInit {
   filedir:string;
 
   // cabecera : Array<String> = ['sfile','action','latitud','longitud','m1_magnitud','m1_magnitud','m1_tipo','m5','m20','no','operator','email_origen','retardo','sensible','tipo_estadistica','up','version'];
-  cabecera : Array<String> = ['sfile','action','fecha_origen','operator','latitud','longitud','m1_magnitud','m1_tipo','no','m5','m20','email_origen','retardo','sensible','tipo_estadistica','up','version'];
+  cabecera : Array<String> = ['sfile','action','fecha_origen','operator','latitud','longitud','dep','m1_magnitud','m1_tipo','no','m5','m20','email_origen','retardo','sensible','tipo_estadistica','up','version'];
 
   constructor(private fb: FormBuilder, private dttService: ConectaService) { 
     this.dttService.stream_msg.subscribe(
@@ -92,9 +93,8 @@ export class AnalisisComponent implements OnInit {
   
     console.log(`period : ${period}`);
     console.log(`periodForm : ${JSON.stringify(this.periodForm.value)}`);
-    
-    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
 
+    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
 
     var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
     var order = {'fecha_origen':'desc','version':'desc'};
@@ -106,13 +106,20 @@ export class AnalisisComponent implements OnInit {
         or['up'] = [0,null];
     }
 
-    if (this.periodForm.value.sensible) {
-      where['sensible'] = true;
+    switch (this.periodForm.value.sensible) {
+      case '_ambos' : {          
+          break;
+      }
+      case '_sensibles' : {
+          where['sensible'] = true;
+          break;
+      }
+      case '_nosensible' : {
+          where['sensible'] = false;
+          break;     
+      }
     }
-    /*
-    r.db('csn').table('migra').orderBy(r.desc('oid'),r.desc('version')).
-    filter(r.row('sfile').eq('02-1517-56L.S201907').and((r.row('up').eq(0)).or(r.row('tipo_estadistica').eq('preliminar'))))
-    */ 
+    
     console.log(`where : ${JSON.stringify(where)}`);
 
     const mensaje: Message = {'command': 'listar', 'tipo': 'rethink', 

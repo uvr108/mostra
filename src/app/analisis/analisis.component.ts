@@ -97,7 +97,7 @@ export class AnalisisComponent implements OnInit {
     var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
 
     var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
-    var order = {'fecha_origen':'desc','version':'desc'};
+    var order = {'oid':'desc','version':'desc'};
     
     var where={};
     var or={};
@@ -110,12 +110,12 @@ export class AnalisisComponent implements OnInit {
       case '_ambos' : {          
           break;
       }
-      case '_sensibles' : {
+      case '_sensible' : {
           where['sensible'] = true;
           break;
       }
       case '_nosensible' : {
-          where['sensible'] = false;
+          where['sensible'] = null;
           break;     
       }
     }

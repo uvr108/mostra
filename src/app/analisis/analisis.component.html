@@ -32,19 +32,12 @@
           <option value='_nosensible'>No</option>
         </select>
       </label>
-
-      <!--label>
-          <p class="text-primary">&nbsp;sensible :
-          <input  type="checkbox" formControlName="sensible">&nbsp;&nbsp;
-          </p>
-      </label-->
          
       <label>
         &nbsp;
       <button type="submit"  class="btn btn-primary btn-sm" [disabled]="!periodForm.valid">Consultar</button>
       </label>&nbsp;
       <label><button type="button" class="btn btn-primary btn-sm"  (click)="pull()" [disabled]="!periodForm.valid">Bajar datos</button></label>
-
     </form>
   </div>
 </div>
@@ -71,13 +64,25 @@
 </div>
 
 <div *ngIf="tipo=='tabla'" class="row">
+    <div class="col-12">
+        <p *ngIf="tabla === undefined; else Mostra">&nbsp;Debe seleccionar Periodo</p>     
+    </div>
+  
+    <ng-template #Mostra>
+        <div *ngIf="tabla.length == 0; else Mostra2"><p>&nbsp;No existen resultados. Revise periodos</p></div>
+    </ng-template>
+  
+    <ng-template #Mostra2>     
+       <pagination-controls (pageChange)="p=$event"></pagination-controls>
+    </ng-template>
+    
+  </div>  
+  
+  <div *ngIf="tipo=='file'" class="row">
   <div class="col-12">
-      <pagination-controls (pageChange)="p=$event"></pagination-controls>
+  
+      <h3>&nbsp;Informes</h3> 
+        <p>&nbsp;Archivo a Bajar [{{my_server_ip}}] : <a href="ftp://{{my_server_ip}}/pub/{{filedir}}" download>[{{filedir}}]</a></p>
+    </div>
   </div>
-</div>  
-
-<div *ngIf="tipo=='file'" class="row">
-<div class="col-12">
-      <p>Archivo a Bajar {{tipo}} : <a href="ftp://10.54.217.84/pub/{{filedir}}" download>{{filedir}}</a></p>
-  </div>
-</div>
+  

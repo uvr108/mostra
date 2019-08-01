@@ -89,7 +89,7 @@ export class DatosComponent implements OnInit, AfterViewInit  {
           this.tabla = msg;
         }
         else { 
-          console.log(`filedir : ${JSON.stringify(msg)}`);
+          //console.log(`filedir : ${JSON.stringify(msg)}`);
           this.filedir=msg['filedir'];
    
         }    
@@ -98,12 +98,12 @@ export class DatosComponent implements OnInit, AfterViewInit  {
   
   ngAfterViewInit() {
 
-    console.log('after_init');
+    // console.log('after_init');
    
   };
 
   ngOnInit() {
-    console.log('init');
+    // console.log('init');
   }
 
 onSubmit(){

@@ -43,8 +43,7 @@ export class DatosComponent implements OnInit, AfterViewInit  {
 
   usadas=[];
   eventos=[];
-  // ratios={};
-
+  
   norte = []; 
   norte_chico = [];
   valparaiso = [];
@@ -60,10 +59,10 @@ export class DatosComponent implements OnInit, AfterViewInit  {
   pull() {
 
   this.tipo='file';
+  const epochNow = (new Date).getTime();
+  this.filedir = String(epochNow);
 
-  const mensaje: Message = {'command': 'download_mostra', 'tipo': 'csv','message': this.tabla};
-
-  console.log(`Message : ${JSON.stringify(mensaje)}`);
+  const mensaje: Message = {'command': 'download_mostra', 'tipo': 'csv','message': [this.filedir, this.tabla]};
 
   this.dttService.send(mensaje);
 
@@ -81,29 +80,18 @@ export class DatosComponent implements OnInit, AfterViewInit  {
 
     this.dttService.stream_msg.subscribe(
       msg => {
-        // console.log(`campos : ${JSON.stringify(this.camposForm.value)}`)  
-        // console.log('Resiviendo dato');
-        // console.log(Object.keys(msg).indexOf('filedir'));
-
-        if (Object.keys(msg).indexOf('filedir') == -1) { 
+        
           this.tabla = msg;
-        }
-        else { 
-          //console.log(`filedir : ${JSON.stringify(msg)}`);
-          this.filedir=msg['filedir'];
-   
-        }    
+      
       });
   }    
   
   ngAfterViewInit() {
-
-    // console.log('after_init');
    
   };
 
   ngOnInit() {
-    // console.log('init');
+   
   }
 
 onSubmit(){
@@ -112,8 +100,7 @@ onSubmit(){
 
   var period = this.make_period();
   
-  // console.log(`period : ${period}`);
-
+  
   
 
   this.zona = [];
@@ -128,8 +115,6 @@ onSubmit(){
   if ( this.periodForm.value['opt_s'] == true) { this.zona.push('Sur');  };
   if ( this.periodForm.value['opt_es'] == true) { this.zona.push('Ext.S');  };
 
-  // console.log(`zona : ${JSON.stringify(this.zona)}`); 
-
   
   var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
   var order = {'fecha_origen':'desc'};
@@ -138,11 +123,7 @@ onSubmit(){
   const mensaje: Message = {'command': 'listar', 'tipo': 'rethink',
     'message': {'table': 'informes', 'option': 'select','betweenISO':between, 'or':or, 'order': order}};
 
-  // console.log(`Message : ${JSON.stringify(mensaje)}`);
-
   this.dttService.send(mensaje);
-
-
 
 }
 

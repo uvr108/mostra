@@ -27,12 +27,7 @@ export class AnalisisComponent implements OnInit {
 
     fecha_ini : ['', [Validators.required]],
     fecha_fin : ['',  [Validators.required]],
-    /*opt_n : ['1'],
-    opt_nc : ['1'],
-    opt_v : ['1'],
-    opt_zc : ['1'],
-    opt_s : ['1'], 
-    opt_es : ['1'],*/
+
     pup : [false],
     sensible: ['_ambos']
   });
@@ -48,11 +43,11 @@ export class AnalisisComponent implements OnInit {
   pull() {
 
     this.tipo='file';
+    const epochNow = (new Date).getTime();
+    this.filedir = String(epochNow);
   
-    const mensaje: Message = {'command': 'download_mostra', 'tipo': 'csv','message': this.tabla};
-  
-    console.log(`Message : ${JSON.stringify(mensaje)}`);
-  
+    const mensaje: Message = {'command': 'download_mostra', 'tipo': 'csv','message': [this.filedir, this.tabla]};
+
     this.dttService.send(mensaje);
   
   }
@@ -68,23 +63,14 @@ export class AnalisisComponent implements OnInit {
   constructor(private fb: FormBuilder, private dttService: ConectaService) { 
     this.dttService.stream_msg.subscribe(
       msg => {
-  
 
-        if (Object.keys(msg).indexOf('filedir') == -1) { 
           this.tabla = msg;
-        }
-        else { 
-          // console.log(`filedir : ${JSON.stringify(msg)}`);
-          this.filedir=msg['filedir'];
-   
-        }    
+    
       });
   }
 
   ngAfterViewInit() {
-
-    // console.log('after_init');
-   
+    
   };
 
     ngOnInit() {
@@ -96,9 +82,6 @@ export class AnalisisComponent implements OnInit {
 
     var period = this.make_period();
   
-    // console.log(`period : ${period}`);
-    // console.log(`periodForm : ${JSON.stringify(this.periodForm.value)}`);
-
     var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
 
     var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
@@ -125,13 +108,9 @@ export class AnalisisComponent implements OnInit {
       }
     }
     
-    // console.log(`where : ${JSON.stringify(where)}`);
-
     const mensaje: Message = {'command': 'listar', 'tipo': 'rethink', 
     'message': {'table': 'analisis', 'option': 'select','betweenISO':between,
     'where' : where, 'order': order, 'or':or}};
-
-    // console.log(`Message : ${JSON.stringify(mensaje)}`);
 
     this.dttService.send(mensaje);
     

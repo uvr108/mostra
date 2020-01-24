@@ -1,6 +1,5 @@
-<div class="row" style="text-align: center"> 
-  
-  <div class="col-12"  style="text-align: left;"> 
+<div style="text-align: left; padding-right: 15px;"> 
+   
       <form [formGroup]="periodForm" (ngSubmit)="onSubmit()" validate> 
       
       <label>
@@ -39,11 +38,10 @@
       </label>&nbsp;
       <label><button type="button" class="btn btn-primary btn-sm"  (click)="pull()" [disabled]="!periodForm.valid">Bajar datos</button></label>
     </form>
-  </div>
+
 </div>
 
-<div class="row" *ngIf="tipo=='tabla'" >
-  <div class="col-12">
+<div *ngIf="tipo=='tabla'" style = "padding-right: 20px">
       <h3>Análisis</h3> 
       <table class="table table-bordered table-sm" width="100%">
         <thead>
@@ -60,7 +58,6 @@
           </tr>
         </thead>
     </table>
-  </div>
 </div>
 
 <div *ngIf="tipo=='tabla'" class="row">

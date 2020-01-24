@@ -12,32 +12,25 @@ const URL = 'ws://' + environment.my_server_ip + ':8765/';
 
 @Injectable()
 export class ConectaService {
-    // public messages: Subject<Message>;
+    
     public stream_msg: Subject<Message> = new Subject<Message>();
 
-    // private msg = { command: 'sumar', message: '[1,2,3,4]' };
-
-    constructor(wsService: WebsocketService) {
-
-    /* Creating observable Subject Message Event from wsService */
-    const wsSubject = wsService.connect(URL);
-    /* Transform Subject Message Evento into Message */
-    this.stream_msg = <Subject<Message>>wsSubject.pipe(map(
-      (response: MessageEvent): Message => {
-        const data = JSON.parse(response.data);
-        return data;
-      }
-      ));
- }
-
-  send(msg: Message) {
-    console.log('send ok');
-    // console.log(JSON.stringify(msg));
+    constructor(wsService: WebsocketService) { 
+        const wsSubject = wsService.connect(URL);
     
-    this.stream_msg.next(msg);
+        this.stream_msg = <Subject<Message>>wsSubject.pipe(map(
+            (response: MessageEvent): Message => {
+                const data = JSON.parse(response.data);
+                return data;
+            })
+        );
+    }
 
-
-  }
-
-
+    send(msg: Message) {
+      
+        console.log('send ok');
+        console.log(`msg : ${JSON.stringify(msg)}`);
+    
+        this.stream_msg.next(msg);
+    }
 }

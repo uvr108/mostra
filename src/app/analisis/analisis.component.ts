@@ -38,7 +38,8 @@ export class AnalisisComponent implements OnInit {
   tipo='tabla';
   filedir:string;
 
-  cabecera : Array<String> = ['sfile','action','fecha_origen','operator','latitud','longitud','dep','m1_magnitud','m1_tipo','no','m5','m20','email_origen','retardo','sensible','tipo_estadistica','up','version'];
+  cabecera : Array<String> = ['event_id','time','lat','lon','mag','mag_type','author','email_delay','evaluation_status',
+  'n20','n5','sensible','station_count','user','version'];
 
   pull() {
 
@@ -73,26 +74,23 @@ export class AnalisisComponent implements OnInit {
     
   };
 
-    ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmit() {
   
     this.tipo='tabla'; 
-
-    var period = this.make_period();
-  
-    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
-
-    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
-    var order = {'oid':'desc','version':'desc'};
     
+    var period = this.make_period();
+    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
+    var order = {'event_id':'desc','version':'desc'};
     var where={};
     var or={};
 
     if (this.periodForm.value.pup) { 
         or['up'] = [0,null];
     }
+
+    console.log(`between : ${JSON.stringify(between)}`);
 
     switch (this.periodForm.value.sensible) {
       case '_ambos' : {          
@@ -109,8 +107,10 @@ export class AnalisisComponent implements OnInit {
     }
     
     const mensaje: Message = {'command': 'listar', 'tipo': 'rethink', 
-    'message': {'table': 'analisis', 'option': 'select','betweenISO':between,
+    'message': {'table': 'seiscomp', 'option': 'select','betweenISO':between,
     'where' : where, 'order': order, 'or':or}};
+
+    // console.log(`mensaje : ${JSON.stringify(mensaje)}`); 
 
     this.dttService.send(mensaje);
     

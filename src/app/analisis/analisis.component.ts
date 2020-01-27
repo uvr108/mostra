@@ -28,7 +28,8 @@ export class AnalisisComponent implements OnInit {
     fecha_ini : ['', [Validators.required]],
     fecha_fin : ['',  [Validators.required]],
 
-    pup : [false],
+    pversion : [false],
+    evaluation_status : ['_ambos'],
     sensible: ['_ambos']
   });
 
@@ -38,7 +39,7 @@ export class AnalisisComponent implements OnInit {
   tipo='tabla';
   filedir:string;
 
-  cabecera : Array<String> = ['event_id','time','lat','lon','mag','mag_type','author','email_delay','evaluation_status',
+  cabecera : Array<String> = ['event_id','time','lat','lon','mag','mag_type','author','process_delay','email_delay','evaluation_status',
   'n20','n5','sensible','station_count','user','version'];
 
   pull() {
@@ -81,16 +82,30 @@ export class AnalisisComponent implements OnInit {
     this.tipo='tabla'; 
     
     var period = this.make_period();
-    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_origen'];
+    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','time'];
     var order = {'event_id':'desc','version':'desc'};
     var where={};
     var or={};
 
-    if (this.periodForm.value.pup) { 
-        or['up'] = [0,null];
+    if (this.periodForm.value.pversion) { 
+        or['version'] = [0,null];
     }
 
     console.log(`between : ${JSON.stringify(between)}`);
+  
+    switch (this.periodForm.value.evaluation_status) {
+      case '_ambos' : {          
+          break;
+      }
+      case '_preliminar' : {
+          where['evaluation_status'] = 'preliminary';
+          break;
+      }
+      case '_final' : {
+          where['evaluation_status'] = 'final';
+          break;     
+      }
+    }
 
     switch (this.periodForm.value.sensible) {
       case '_ambos' : {          

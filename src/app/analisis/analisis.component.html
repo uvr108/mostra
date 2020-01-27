@@ -15,15 +15,25 @@
       </label>
 
       <label>
-          <p class="text-primary">&nbsp;pup :
-          <input  type="checkbox" formControlName="pup">&nbsp;
+          <p class="text-primary">&nbsp;version 0 :
+          <input  type="checkbox" formControlName="pversion">&nbsp;
           </p>
       </label>
       
       <label>
-      <p class="text-primay">&nbsp;Sensibles :&nbsp;</p>
+      <p class="text-primay">&nbsp;Evaluation Status :&nbsp;</p>
       </label>
 
+      <label>
+        <select class="form-control" formControlName="evaluation_status">
+          <option value='_ambos'>Todos</option>
+          <option value='_preliminar'>Preliminar</option>
+          <option value='_final'>Final</option>
+        </select>
+      </label>
+      <label>
+        <p class="text-primay">&nbsp;Sensible :&nbsp;</p>
+        </label>
       <label>
         <select class="form-control" formControlName="sensible">
           <option value='_ambos'>Todos</option>

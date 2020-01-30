@@ -39,7 +39,7 @@ export class AnalisisComponent implements OnInit {
   tipo='tabla';
   filedir:string;
 
-  cabecera : Array<String> = ['event_id','time','lat','lon','mag','mag_type','author','process_delay','email_delay','evaluation_status',
+  cabecera : Array<String> = ['event_id','fecha_even','lat','lon','mag','mag_type','author','process_delay','email_delay','evaluation_status',
   'n20','n5','sensible','station_count','user','version'];
 
   pull() {
@@ -58,7 +58,7 @@ export class AnalisisComponent implements OnInit {
 
     this.fecha_ini = this.periodForm.value['fecha_ini'];
     this.fecha_fin = this.periodForm.value['fecha_fin'];
-
+    console.log(`FECHAS : ${JSON.stringify(this.fecha_ini)} ${JSON.stringify(this.fecha_fin)}`); 
     return [this.fecha_ini , this.fecha_fin]
   }
 
@@ -67,6 +67,7 @@ export class AnalisisComponent implements OnInit {
       msg => {
 
           this.tabla = msg;
+          // console.log(`this.tabla ${JSON.stringify(this.tabla)}`)
     
       });
   }
@@ -75,14 +76,16 @@ export class AnalisisComponent implements OnInit {
     
   };
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   onSubmit() {
   
     this.tipo='tabla'; 
     
     var period = this.make_period();
-    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','time'];
+    var between = [period[0] + 'T00:00:00+00:00' , period[1]+'T23:59:59+00:00','fecha_even'];
     var order = {'event_id':'desc','version':'desc'};
     var where={};
     var or={};
@@ -91,7 +94,7 @@ export class AnalisisComponent implements OnInit {
         or['version'] = [0,null];
     }
 
-    console.log(`between : ${JSON.stringify(between)}`);
+    // console.log(`between : ${JSON.stringify(between)}`);
   
     switch (this.periodForm.value.evaluation_status) {
       case '_ambos' : {          
@@ -120,7 +123,7 @@ export class AnalisisComponent implements OnInit {
           break;     
       }
     }
-    
+    // 
     const mensaje: Message = {'command': 'listar', 'tipo': 'rethink', 
     'message': {'table': 'seiscomp', 'option': 'select','betweenISO':between,
     'where' : where, 'order': order, 'or':or}};
